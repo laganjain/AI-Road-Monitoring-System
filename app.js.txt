@@ -1,217 +1,168 @@
-// app.js
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  signOut,
   sendPasswordResetEmail,
+  signOut,
   onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
 import {
   getFirestore,
   collection,
   addDoc,
-  onSnapshot,
+  serverTimestamp,
   query,
   orderBy,
-  serverTimestamp
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 import { firebaseConfig } from "./firebaseConfig.js";
 
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const auth = getAuth();
+const db = getFirestore();
 
-// DOM elements
+
+// UI elements
 const loginSection = document.getElementById("login-section");
 const dashboardSection = document.getElementById("dashboard-section");
 
-const loginBtn = document.getElementById("login-btn");
-const signupBtn = document.getElementById("signup-btn");
-const logoutBtn = document.getElementById("logout-btn");
-const reportBtn = document.getElementById("report-btn");
-const sensorBtn = document.getElementById("sensor-btn");
-const forgotPass = document.getElementById("forgot-pass");
-
+const loginMsg = document.getElementById("login-message");
+const dashMsg = document.getElementById("dashboard-message");
 const reportList = document.getElementById("report-list");
-const loginMessage = document.getElementById("login-message");
-const dashboardMessage = document.getElementById("dashboard-message");
 
-let currentUser = null;
 
-// Handle auth state
+
+// Auth State Change
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    currentUser = user;
     loginSection.classList.add("hidden");
     dashboardSection.classList.remove("hidden");
-    dashboardMessage.textContent = `Logged in as: ${user.email}`;
-    dashboardMessage.classList.add("success");
+    dashMsg.innerText = "Logged in as " + user.email;
   } else {
-    currentUser = null;
     dashboardSection.classList.add("hidden");
     loginSection.classList.remove("hidden");
-    loginMessage.textContent = "";
-    dashboardMessage.textContent = "";
   }
 });
 
-// Helper message functions
-function showLoginMessage(text, type = "") {
-  loginMessage.textContent = text;
-  loginMessage.className = "message";
-  if (type === "error") loginMessage.classList.add("error");
-  if (type === "success") loginMessage.classList.add("success");
-}
 
-function showDashboardMessage(text, type = "") {
-  dashboardMessage.textContent = text;
-  dashboardMessage.className = "message";
-  if (type === "error") dashboardMessage.classList.add("error");
-  if (type === "success") dashboardMessage.classList.add("success");
-}
-
-// Login
-loginBtn.onclick = async () => {
-  const email = document.getElementById("email").value.trim();
-  const pass = document.getElementById("password").value.trim();
-
-  if (!email || !pass) {
-    showLoginMessage("Please enter email and password.", "error");
-    return;
-  }
+// LOGIN
+document.getElementById("login-btn").onclick = async () => {
+  let email = document.getElementById("email").value;
+  let pass = document.getElementById("password").value;
 
   try {
     await signInWithEmailAndPassword(auth, email, pass);
-    showLoginMessage("Login successful!", "success");
-  } catch (err) {
-    showLoginMessage(err.message, "error");
+    loginMsg.innerHTML = "<span class='success'>Login successful</span>";
+  } catch (e) {
+    loginMsg.innerHTML = "<span class='error'>" + e.message + "</span>";
   }
 };
 
-// Signup
-signupBtn.onclick = async () => {
-  const email = document.getElementById("email").value.trim();
-  const pass = document.getElementById("password").value.trim();
 
-  if (!email || !pass) {
-    showLoginMessage("Please enter email and password.", "error");
-    return;
-  }
+// SIGNUP
+document.getElementById("signup-btn").onclick = async () => {
+  let email = document.getElementById("email").value;
+  let pass = document.getElementById("password").value;
 
   try {
     await createUserWithEmailAndPassword(auth, email, pass);
-    showLoginMessage("Account created! Please login.", "success");
-  } catch (err) {
-    showLoginMessage(err.message, "error");
+    loginMsg.innerHTML = "<span class='success'>Account created</span>";
+  } catch (e) {
+    loginMsg.innerHTML = "<span class='error'>" + e.message + "</span>";
   }
 };
 
-// Logout
-logoutBtn.onclick = async () => {
-  try {
-    await signOut(auth);
-    showDashboardMessage("Logged out successfully.", "success");
-  } catch (err) {
-    showDashboardMessage(err.message, "error");
-  }
-};
 
-// Forgot password
-forgotPass.onclick = async () => {
-  const email = document.getElementById("email").value.trim();
-  if (!email) {
-    showLoginMessage("Enter your email first to reset password.", "error");
-    return;
-  }
+// FORGOT PASSWORD
+document.getElementById("forgot-pass").onclick = async () => {
+  let email = document.getElementById("email").value;
+
   try {
     await sendPasswordResetEmail(auth, email);
-    showLoginMessage("Password reset email sent!", "success");
-  } catch (err) {
-    showLoginMessage(err.message, "error");
+    loginMsg.innerHTML = "<span class='success'>Reset email sent!</span>";
+  } catch (e) {
+    loginMsg.innerHTML = "<span class='error'>" + e.message + "</span>";
   }
 };
 
-// Manual hazard report
-reportBtn.onclick = async () => {
-  const type = document.querySelector('input[name="incident"]:checked')?.value;
-  const location = document.getElementById("location").value.trim();
+
+// LOGOUT
+document.getElementById("logout-btn").onclick = async () => {
+  await signOut(auth);
+};
+
+
+// MANUAL REPORT
+document.getElementById("report-btn").onclick = async () => {
+  let type = document.querySelector("input[name='incident']:checked")?.value;
+  let location = document.getElementById("location").value;
 
   if (!type || !location) {
-    showDashboardMessage("Please select incident type and enter location.", "error");
+    dashMsg.innerHTML = "<span class='error'>Select incident + enter location</span>";
     return;
   }
 
-  try {
-    await addDoc(collection(db, "road_reports"), {
-      type,
-      locationName: location,
-      userEmail: currentUser?.email || "Anonymous",
-      userId: currentUser?.uid || "N/A",
-      timestamp: serverTimestamp(),
-      source: "manual",
-      sensorData: null
-    });
-    showDashboardMessage("Report submitted successfully!", "success");
-    document.getElementById("location").value = "";
-  } catch (err) {
-    showDashboardMessage("Error adding report: " + err.message, "error");
-  }
+  await addDoc(collection(db, "road_reports"), {
+    type,
+    locationName: location,
+    userEmail: auth.currentUser.email,
+    userId: auth.currentUser.uid,
+    timestamp: serverTimestamp(),
+    source: "manual"
+  });
+
+  dashMsg.innerHTML = "<span class='success'>Report submitted</span>";
+  document.getElementById("location").value = "";
 };
 
-// Sensor data entry (simulated)
-sensorBtn.onclick = async () => {
-  const type = document.querySelector('input[name="sensorIncident"]:checked')?.value;
-  const location = document.getElementById("sensor-location").value.trim();
+
+// SENSOR REPORT
+document.getElementById("sensor-btn").onclick = async () => {
+  let type = document.querySelector("input[name='sensorIncident']:checked")?.value;
+  let location = document.getElementById("sensor-location").value;
 
   if (!type || !location) {
-    showLoginMessage("Select sensor incident and enter location.", "error");
+    loginMsg.innerHTML = "<span class='error'>Select incident + enter location</span>";
     return;
   }
 
-  try {
-    await addDoc(collection(db, "road_reports"), {
-      type,
-      locationName: location,
-      userEmail: "Sensor",
-      userId: "sensor_auto",
-      timestamp: serverTimestamp(),
-      source: "sensor",
-      sensorData: {
-        vibration: Math.random() * 5, // demo value
-        waterLevel: Math.random() * 10 // demo value
-      }
-    });
-    showLoginMessage("Sensor report added!", "success");
-    document.getElementById("sensor-location").value = "";
-  } catch (err) {
-    showLoginMessage("Error adding sensor report: " + err.message, "error");
-  }
+  await addDoc(collection(db, "road_reports"), {
+    type,
+    locationName: location,
+    userEmail: "Sensor Module",
+    userId: "sensor_auto",
+    timestamp: serverTimestamp(),
+    source: "sensor",
+    sensorData: { vibration: Math.random() * 5 }
+  });
+
+  loginMsg.innerHTML = "<span class='success'>Sensor report sent</span>";
+  document.getElementById("sensor-location").value = "";
 };
 
-// Live listener (newest first)
+
+
+// REAL-TIME LISTENER (Newest first)
 const q = query(collection(db, "road_reports"), orderBy("timestamp", "desc"));
+
 onSnapshot(q, (snapshot) => {
   reportList.innerHTML = "";
   snapshot.forEach((doc) => {
-    const data = doc.data();
-    const li = document.createElement("li");
+    let d = doc.data();
+    let time = d.timestamp ? d.timestamp.toDate().toLocaleString() : "Pending";
 
-    const time = data.timestamp?.toDate
-      ? data.timestamp.toDate().toLocaleString()
-      : "Pending...";
-
+    let li = document.createElement("li");
     li.innerHTML = `
-      <strong>${data.type || "Unknown"}</strong> at ${data.locationName || "Unknown"}
-      <br>
-      👤 ${data.userEmail || "Unknown"} | 🕒 ${time}
-      <br>
-      Source: ${data.source || "N/A"}
+      <strong>${d.type}</strong> at ${d.locationName}<br>
+      Reported by: ${d.userEmail}<br>
+      Time: ${time} <br>
+      Source: ${d.source}
     `;
-
     reportList.appendChild(li);
   });
 });
