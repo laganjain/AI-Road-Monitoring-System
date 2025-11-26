@@ -1,76 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>AI Road Monitoring & Incident Response System</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <!-- LOGIN + SENSOR ENTRY SECTION -->
-  <div id="login-section" class="container">
-    <h1 class="title">AI Road Monitoring & Incident Response</h1>
-    <h2 class="subtitle">Team: Wall Breakers (Lagan Jain & Palak Shukla)</h2>
+/* Modern Glass UI for Road Monitoring System */
 
-    <h3 class="section-title">Login / Sign Up</h3>
-    <input id="email" type="email" placeholder="Email" class="input" />
-    <input id="password" type="password" placeholder="Password" class="input" />
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+}
 
-    <div class="button-row">
-      <button id="login-btn" class="btn primary">Login</button>
-      <button id="signup-btn" class="btn secondary">Sign Up</button>
-    </div>
+.container {
+  width: 420px;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+  margin-bottom: 40px;
+}
 
-    <p id="forgot-pass" class="link">Forgot Password?</p>
+.title { text-align: center; font-size: 24px; font-weight: 700; }
+.subtitle { text-align: center; opacity: 0.8; font-size: 14px; }
 
-    <hr class="divider" />
+.input {
+  width: 100%;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255,255,255,0.12);
+  color: white;
+}
 
-    <h3 class="section-title">📡 Quick Sensor Data Entry (Demo)</h3>
-    <div class="incident-options">
-      <label><input type="radio" name="sensorIncident" value="Pothole" /> 🕳️ Pothole</label>
-      <label><input type="radio" name="sensorIncident" value="Waterlogging" /> 💧 Waterlogging</label>
-      <label><input type="radio" name="sensorIncident" value="Accident" /> 🚨 Accident</label>
-      <label><input type="radio" name="sensorIncident" value="Traffic Jam" /> 🚗 Traffic Jam</label>
-      <label><input type="radio" name="sensorIncident" value="Road Closure" /> 🚧 Road Closure</label>
-    </div>
+.btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+}
 
-    <input id="sensor-location" type="text" placeholder="Enter sensor-detected location" class="input" />
-    <button id="sensor-btn" class="btn accent">Add Sensor Report</button>
+.primary { background: #00aaff; color: white; }
+.secondary { background: #1f2933; color: white; }
+.accent { background: #22c55e; color: white; }
+.danger { background: #ef4444; color: white; }
 
-    <p id="login-message" class="message"></p>
-  </div>
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
 
-  <!-- DASHBOARD SECTION -->
-  <div id="dashboard-section" class="container hidden">
-    <h1 class="title">AI Road Monitoring Dashboard</h1>
-    <p class="subtitle">Live Road Hazard Reports (Newest First)</p>
+.message { margin-top: 5px; text-align: center; font-size: 13px; }
+.error { color: #ffb8b8; }
+.success { color: #d4ffd4; }
 
-    <h3 class="section-title">Report a Road Hazard</h3>
-    <div class="incident-options">
-      <label><input type="radio" name="incident" value="Pothole" /> 🕳️ Pothole</label>
-      <label><input type="radio" name="incident" value="Waterlogging" /> 💧 Waterlogging</label>
-      <label><input type="radio" name="incident" value="Accident" /> 🚨 Accident</label>
-      <label><input type="radio" name="incident" value="Traffic Jam" /> 🚗 Traffic Jam</label>
-      <label><input type="radio" name="incident" value="Road Closure" /> 🚧 Road Closure</label>
-      <label><input type="radio" name="incident" value="Construction Work" /> 🏗️ Construction Work</label>
-    </div>
+.incident-options label { display: block; margin: 5px 0; }
 
-    <input id="location" type="text" placeholder="Enter location / landmark" class="input" />
+.report-list {
+  list-style: none;
+  padding: 0;
+}
 
-    <div class="button-row">
-      <button id="report-btn" class="btn primary">📤 Submit Report</button>
-      <button id="logout-btn" class="btn danger">🚪 Logout</button>
-    </div>
-
-    <h3 class="section-title">📋 Live Reports</h3>
-    <ul id="report-list" class="report-list">
-      <!-- Reports injected by app.js -->
-    </ul>
-
-    <p id="dashboard-message" class="message"></p>
-  </div>
-
-  <!-- MAIN APP SCRIPT -->
-  <script type="module" src="app.js"></script>
-</body>
-</html>
+.report-list li {
+  background: rgba(0,0,0,0.4);
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  border-left: 4px solid #00aaff;
+}
+.hidden { display: none; }
