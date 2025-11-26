@@ -1,13 +1,10 @@
 // firebaseConfig.js
-// Replace THESE values with your actual Firebase project configuration
-// from Firebase console → Project settings → SDK setup and configuration.
-
 export const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",
-  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-  // measurementId: "YOUR_MEASUREMENT_ID" // optional
+  apiKey: "AIzaSyDN4VoDdd6HFKR-W93dk2sBj-oPN9ntH0k",
+  authDomain: "airoadsystem.firebaseapp.com",
+  projectId: "airoadsystem",
+  storageBucket: "airoadsystem.firebasestorage.app",
+  messagingSenderId: "328023211998",
+  appId: "1:328023211998:web:904327f9cdb15eeaec274f",
+  measurementId: "G-SS2L8TT5VR"
 };
