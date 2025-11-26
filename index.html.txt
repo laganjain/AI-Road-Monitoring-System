@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <!-- LOGIN + SENSOR ENTRY SECTION -->
-  <div id="login-section" class="container">
-    <h1 class="title">AI Road Monitoring & Incident Response</h1>
-    <h2 class="subtitle">Team: Wall Breakers (Lagan Jain & Palak Shukla)</h2>
 
-    <h3 class="section-title">Login / Sign Up</h3>
-    <input id="email" type="email" placeholder="Email" class="input" />
-    <input id="password" type="password" placeholder="Password" class="input" />
+  <!-- LOGIN SECTION -->
+  <div id="login-section" class="container">
+    <h1 class="title">AI Road Condition System</h1>
+    <h2 class="subtitle">Team Wall Breakers</h2>
+
+    <input id="email" type="email" class="input" placeholder="Email" />
+    <input id="password" type="password" class="input" placeholder="Password" />
 
     <div class="button-row">
       <button id="login-btn" class="btn primary">Login</button>
@@ -22,55 +22,51 @@
     </div>
 
     <p id="forgot-pass" class="link">Forgot Password?</p>
+    <p id="login-message" class="message"></p>
 
     <hr class="divider" />
 
-    <h3 class="section-title">📡 Quick Sensor Data Entry (Demo)</h3>
+    <h3 class="section-title">Sensor Demo Input</h3>
+
     <div class="incident-options">
-      <label><input type="radio" name="sensorIncident" value="Pothole" /> 🕳️ Pothole</label>
-      <label><input type="radio" name="sensorIncident" value="Waterlogging" /> 💧 Waterlogging</label>
-      <label><input type="radio" name="sensorIncident" value="Accident" /> 🚨 Accident</label>
-      <label><input type="radio" name="sensorIncident" value="Traffic Jam" /> 🚗 Traffic Jam</label>
-      <label><input type="radio" name="sensorIncident" value="Road Closure" /> 🚧 Road Closure</label>
+      <label><input type="radio" name="sensorIncident" value="Pothole"> Pothole</label>
+      <label><input type="radio" name="sensorIncident" value="Waterlogging"> Waterlogging</label>
+      <label><input type="radio" name="sensorIncident" value="Accident"> Accident</label>
+      <label><input type="radio" name="sensorIncident" value="Traffic Jam"> Traffic Jam</label>
     </div>
 
-    <input id="sensor-location" type="text" placeholder="Enter sensor-detected location" class="input" />
-    <button id="sensor-btn" class="btn accent">Add Sensor Report</button>
-
-    <p id="login-message" class="message"></p>
+    <input id="sensor-location" type="text" class="input" placeholder="Sensor detected location" />
+    <button id="sensor-btn" class="btn accent">Submit Sensor Data</button>
   </div>
 
-  <!-- DASHBOARD SECTION -->
-  <div id="dashboard-section" class="container hidden">
-    <h1 class="title">AI Road Monitoring Dashboard</h1>
-    <p class="subtitle">Live Road Hazard Reports (Newest First)</p>
 
-    <h3 class="section-title">Report a Road Hazard</h3>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard-section" class="container hidden">
+    <h1 class="title">Live Road Reports</h1>
+
     <div class="incident-options">
-      <label><input type="radio" name="incident" value="Pothole" /> 🕳️ Pothole</label>
-      <label><input type="radio" name="incident" value="Waterlogging" /> 💧 Waterlogging</label>
-      <label><input type="radio" name="incident" value="Accident" /> 🚨 Accident</label>
-      <label><input type="radio" name="incident" value="Traffic Jam" /> 🚗 Traffic Jam</label>
-      <label><input type="radio" name="incident" value="Road Closure" /> 🚧 Road Closure</label>
-      <label><input type="radio" name="incident" value="Construction Work" /> 🏗️ Construction Work</label>
+      <label><input type="radio" name="incident" value="Pothole"> Pothole</label>
+      <label><input type="radio" name="incident" value="Waterlogging"> Waterlogging</label>
+      <label><input type="radio" name="incident" value="Accident"> Accident</label>
+      <label><input type="radio" name="incident" value="Traffic Jam"> Traffic Jam</label>
+      <label><input type="radio" name="incident" value="Road Closure"> Road Closure</label>
+      <label><input type="radio" name="incident" value="Construction"> Construction</label>
     </div>
 
-    <input id="location" type="text" placeholder="Enter location / landmark" class="input" />
+    <input id="location" type="text" class="input" placeholder="Enter location" />
 
     <div class="button-row">
-      <button id="report-btn" class="btn primary">📤 Submit Report</button>
-      <button id="logout-btn" class="btn danger">🚪 Logout</button>
+      <button id="report-btn" class="btn primary">Submit Report</button>
+      <button id="logout-btn" class="btn danger">Logout</button>
     </div>
 
-    <h3 class="section-title">📋 Live Reports</h3>
-    <ul id="report-list" class="report-list">
-      <!-- Reports injected by app.js -->
-    </ul>
-
     <p id="dashboard-message" class="message"></p>
+
+    <h3 class="section-title">Live Reports (Newest First)</h3>
+    <ul id="report-list" class="report-list"></ul>
   </div>
 
-  <!-- MAIN APP SCRIPT -->
   <script type="module" src="app.js"></script>
 </body>
 </html>
