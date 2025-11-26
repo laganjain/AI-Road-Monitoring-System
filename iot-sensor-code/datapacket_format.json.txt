@@ -1,0 +1,12 @@
+{
+  "example_sensor_packet": {
+    "type": "Pothole",
+    "source": "sensor",
+    "latitude": 19.076,
+    "longitude": 72.8777,
+    "vibration": 4.5,
+    "waterLevel": 0,
+    "timestamp": "2025-11-26T10:30:00Z",
+    "vehicleId": "MH12AB1234"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "collections": {
+    "road_reports": {
+      "fields": {
+        "type": "string",
+        "locationName": "string",
+        "latitude": "number (optional)",
+        "longitude": "number (optional)",
+        "userEmail": "string",
+        "userId": "string",
+        "timestamp": "timestamp",
+        "source": "string",
+        "sensorData": "map (optional)"
+      }
+    }
+  }
+}

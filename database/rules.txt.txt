@@ -1,0 +1,9 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /road_reports/{docId} {
+      allow read: if true; // public read (for demo)
+      allow write: if request.auth != null; // only logged-in users can write
+    }
+  }
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Road Monitoring & Incident Response System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- LOGIN + SENSOR ENTRY SECTION -->
+  <div id="login-section" class="container">
+    <h1 class="title">AI Road Monitoring & Incident Response</h1>
+    <h2 class="subtitle">Team: Wall Breakers (Lagan Jain & Palak Shukla)</h2>
+
+    <h3 class="section-title">Login / Sign Up</h3>
+    <input id="email" type="email" placeholder="Email" class="input" />
+    <input id="password" type="password" placeholder="Password" class="input" />
+
+    <div class="button-row">
+      <button id="login-btn" class="btn primary">Login</button>
+      <button id="signup-btn" class="btn secondary">Sign Up</button>
+    </div>
+
+    <p id="forgot-pass" class="link">Forgot Password?</p>
+
+    <hr class="divider" />
+
+    <h3 class="section-title">📡 Quick Sensor Data Entry (Demo)</h3>
+    <div class="incident-options">
+      <label><input type="radio" name="sensorIncident" value="Pothole" /> 🕳️ Pothole</label>
+      <label><input type="radio" name="sensorIncident" value="Waterlogging" /> 💧 Waterlogging</label>
+      <label><input type="radio" name="sensorIncident" value="Accident" /> 🚨 Accident</label>
+      <label><input type="radio" name="sensorIncident" value="Traffic Jam" /> 🚗 Traffic Jam</label>
+      <label><input type="radio" name="sensorIncident" value="Road Closure" /> 🚧 Road Closure</label>
+    </div>
+
+    <input id="sensor-location" type="text" placeholder="Enter sensor-detected location" class="input" />
+    <button id="sensor-btn" class="btn accent">Add Sensor Report</button>
+
+    <p id="login-message" class="message"></p>
+  </div>
+
+  <!-- DASHBOARD SECTION -->
+  <div id="dashboard-section" class="container hidden">
+    <h1 class="title">AI Road Monitoring Dashboard</h1>
+    <p class="subtitle">Live Road Hazard Reports (Newest First)</p>
+
+    <h3 class="section-title">Report a Road Hazard</h3>
+    <div class="incident-options">
+      <label><input type="radio" name="incident" value="Pothole" /> 🕳️ Pothole</label>
+      <label><input type="radio" name="incident" value="Waterlogging" /> 💧 Waterlogging</label>
+      <label><input type="radio" name="incident" value="Accident" /> 🚨 Accident</label>
+      <label><input type="radio" name="incident" value="Traffic Jam" /> 🚗 Traffic Jam</label>
+      <label><input type="radio" name="incident" value="Road Closure" /> 🚧 Road Closure</label>
+      <label><input type="radio" name="incident" value="Construction Work" /> 🏗️ Construction Work</label>
+    </div>
+
+    <input id="location" type="text" placeholder="Enter location / landmark" class="input" />
+
+    <div class="button-row">
+      <button id="report-btn" class="btn primary">📤 Submit Report</button>
+      <button id="logout-btn" class="btn danger">🚪 Logout</button>
+    </div>
+
+    <h3 class="section-title">📋 Live Reports</h3>
+    <ul id="report-list" class="report-list">
+      <!-- Reports injected by app.js -->
+    </ul>
+
+    <p id="dashboard-message" class="message"></p>
+  </div>
+
+  <!-- MAIN APP SCRIPT -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

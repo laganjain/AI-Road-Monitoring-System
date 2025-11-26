@@ -1,0 +1,23 @@
+[
+  {
+    "type": "Pothole",
+    "locationName": "VIP Road near Signal",
+    "userEmail": "user1@example.com",
+    "userId": "abc123",
+    "timestamp": "2025-11-25T09:15:00Z",
+    "source": "manual",
+    "sensorData": null
+  },
+  {
+    "type": "Waterlogging",
+    "locationName": "MG Road Bus Stop",
+    "userEmail": "Sensor",
+    "userId": "sensor_auto",
+    "timestamp": "2025-11-25T09:20:00Z",
+    "source": "sensor",
+    "sensorData": {
+      "waterLevel": 7.8,
+      "vibration": 0.3
+    }
+  }
+]

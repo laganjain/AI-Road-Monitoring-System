@@ -1,0 +1,29 @@
+// esp32_pothole_sensor.ino
+// Demo structure for pothole detection using ESP32 + MPU6050
+
+#include <Wire.h>
+#include "MPU6050.h"
+
+MPU6050 mpu;
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin();
+  mpu.initialize();
+}
+
+void loop() {
+  int16_t ax, ay, az;
+  mpu.getAcceleration(&ax, &ay, &az);
+
+  // Simple shock threshold (demo)
+  if (abs(az) > 20000) {
+    Serial.println("Pothole-like shock detected!");
+
+    // Here you would format and send data (e.g., via WiFi/HTTP/MQTT) to backend/Firebase
+    // Example JSON:
+    // { "type": "Pothole", "vibration": az, "lat": ..., "lng": ... }
+  }
+
+  delay(200);
+}
